@@ -1,9 +1,10 @@
 # Wastewater virus surveillance analysis pipeline  
-A bioinformatic analysis pipeline for analyzing the pairwise sequencing data (2 X 150 bp) generated from the library prepared by the Illumina virus surveillance panel
-Notes - This Repo is under active development and please refer to the updated version. 
+This bioinformatic pipeline is used to analyze targeted sequencing data of viruses generated from total nucleic acid extracted from wastewater samples using various concentration/extraction methods. The sequencing library was prepared with the Illumina Virus Surveillance Panel (probe-capture enrichment) and paired with RNA preparation using Enrichment and Tagmentation kits.
+
+Notes - This Repo is still under active development and please refer to the updated version. 
 
 ## Introduction
-This pipeline includes both read-based and assembly-based virus classification. The read-based analysis identifies viruses using Centrifuge and Recentrifuge (https://github.com/khyox/recentrifuge/wiki/Running-recentrifuge-for-Centrifuge) followed by the bash script for the host screen of all classified virus reads. The assembly-based classification includes the full assembly by SPAdes (https://cab.spbu.ru/files/release3.12.0/manual.html#sec2.3), virus classification by Virsorter2 (https://github.com/jiarong/VirSorter2#detailed-description-on-output-files), and the following Blastn against the NCBI nt virus database. The generated near-complete virus genomes were used for phylogenetic analysis (using MUSCLE, Fasttree/MEGA 11.0). The variants calling process was also included using the bcftools and instrain. 
+This pipeline takes FASTQ files as input and includes both read-based and assembly-based virus classification. Prior to classification, quality control (QC) is performed, followed by deduplication to generate unique reads. The read-based analysis identifies viruses using Centrifuge and Recentrifuge, and the classified taxID were used for retriving the virus host information from NCBI taxonomy. The assembly-based classification involves full assembly by SPAdes, virus classification by Virsorter2, and subsequent Blastn against the NCBI nt virus database. The resulting near-complete virus genomes are utilized for phylogenetic analysis and variant calling.
 
 Dataset and code for the manuscript: Evaluation of the impact of concentration and extraction methods on the targeted sequencing of human viruses from wastewater
 
