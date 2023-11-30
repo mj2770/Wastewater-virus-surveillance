@@ -14,8 +14,8 @@ All deposited in the NCBI Sequence Read Archive (SRA) under accession number SUB
 ### 2. Database
    * Refseq virus: download using [Entrez](https://www.ncbi.nlm.nih.gov/books/NBK25501/)
      ```
-"Viruses"[Organism] NOT "cellular organisms"[Organism] NOT wgs[PROP] NOT gbdiv syn[prop] AND (srcdb_refseq[PROP] OR nuccore genome samespecies[Filter])
-```
+     "Viruses"[Organism] NOT "cellular organisms"[Organism] NOT wgs[PROP] NOT gbdiv syn[prop] AND (srcdb_refseq[PROP] OR nuccore genome samespecies[Filter])
+     ```
    * [NCBI nt-virus](https://ftp.ncbi.nlm.nih.gov/blast/db/)
    * Centrifuge and Recentrifuge default database: [NCBI nt decontaminated version](https://github.com/khyox/recentrifuge/wiki/Centrifuge-nt)
 ### 3. Dependent packages
