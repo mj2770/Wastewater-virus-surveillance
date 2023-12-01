@@ -10,7 +10,7 @@ Dataset and code for the manuscript: Evaluation of the impact of concentration a
 
 ## Download database and dependencies
 ### 1. Raw sequencing data 
-All deposited in the NCBI Sequence Read Archive (SRA) under accession number SUB13892842.
+All are deposited in the NCBI Sequence Read Archive (SRA) under accession number: SUB13892842 and Bioproject ID: PRJNA1047067.
 ### 2. Database
    * Refseq virus: download using [Entrez](https://www.ncbi.nlm.nih.gov/books/NBK25501/)
      ```
