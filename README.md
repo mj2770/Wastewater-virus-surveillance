@@ -32,7 +32,26 @@ All are deposited in the NCBI Sequence Read Archive (SRA) under accession number
    * [Dataset](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/) and [Dataformat](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/)
 
 ## Basic analysis pipeline
-### 1. Quality control 
+### STEP 1. Quality control 
+Step 1.1 Quality filter of raw reads
+```
+bbduk.sh in1=$f in2=$f2 out1=$out_path".forward" out2=$out_path".reverse" \
+    outm1=$out_path".forward.unpaired" outm2=$out_path".reverse.unpaired" \
+    ref=adapters ktrim=r k=23 mink=11 hdist=1 qtrim=r:4:10 tpe tbo minlen=70
+```
+Step 1.2 Dedupe the good quality reads
+```
+seqkit rmdup -s "$cleaned_file" -o "$OUT_DIR/STEP_1/$filename.forward.deduped"
+```
+Step 1.3 Paired the deduped reads
+```
+seqkit pair -1 "$forward_file" -2 "$reverse_file" -O "$output_dir" -u
+```
+Step 1.4 Statistical analysis of all reads
+```
+ seqkit stats -j 100 "$file" -a > "temp_stats.txt
+```
+
 
 ### 2. Statistics summary of the unique reads
 
