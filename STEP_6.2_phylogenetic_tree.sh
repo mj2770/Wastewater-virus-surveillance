@@ -15,7 +15,7 @@ FASTTREE_PATH="/p/lustre1/preview/seq_software/FastTree"
 cd /p/lustre1/preview/seq_data/output/STEP_9_Phylogenetic_Tree/JC/
 
 # Perform Multiple Sequence Alignment (MSA) with MUSCLE
-#$MUSCLE_PATH -in hopefully_final.fas -out hopefully_final_MUSCLE.fasta
+$MUSCLE_PATH -in hopefully_final.fas -out hopefully_final_MUSCLE.fasta
 
 # Generate Phylogenetic Tree with FastTree
 $FASTTREE_PATH  -nt -gtr -boot 100 align_cured_Gblock_2.fas > 10_3_Gblock.nwk
