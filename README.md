@@ -89,7 +89,7 @@ Step 4.3 Blastn for assemblies
 "$blastn_path" -query "$input_file" -db "$db_path" -out "$output_file" -outfmt 6 \
   -evalue 1e-8 -perc_identity 80 -max_hsps 1 -qcov_hsp_perc 90
 ```
-Step 4.4 Select best hits based on bitscore 
+Step 4.4 Quality filter for the blastn results 
 ```
 # Read the BLASTN output file as a DataFrame
 blastn_data = pd.read_csv(blastn_file, sep='\t', header=None)
@@ -103,8 +103,23 @@ selected_reads = blastn_data[(blastn_data[2] > min_identity) &
                              (blastn_data[10] < max_evalue) &
                              (blastn_data['Coverage'] > min_coverage)]
 ```
+Step 4.5 Select the best hits for each assembly based on the bitscore
+```
+# Sort the DataFrame by the Bitscore column in descending order
+sorted_data = blastn_data.sort_values(by=11, ascending=False)
 
-#### Full-assembly followed by classification 
-#### Sub-assembly using classified virus reads 
+# Drop duplicates based on the unique Node (column 0) while keeping only the first occurrence
+selected_reads = sorted_data.drop_duplicates(subset=0, keep='first')
+```
+Step 4.6 Collect the best-hits accession number 
+```
+# Save the selected hits to a file
+output_file = os.path.join(output_directory, f"{base_name}_best_hits.blastn")
+selected_reads.to_csv(output_file, sep='\t', index=False, header=False)
+```
+Step 4.7 Qurey the database using NCBI dataset and dataformat 
+```
+"$DATASETS_PATH" summary virus genome accession --inputfile "$input" --as-json-lines | "$DATAFORMAT_PATH" tsv virus-genome --fields accession,virus-name,virus-tax-id,host-name,host-tax-id,completeness,length > best_hits.tsv
+```
 
 ### 6. Subtyping and variants calling 
