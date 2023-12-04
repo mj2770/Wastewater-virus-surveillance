@@ -75,8 +75,35 @@ $rcf_insall_path/rcf -n $taxonomy_dir -f $f1 -e TSV -o "$(basename $f1 _mhl22.ou
        #Calculate MASH pairwise distances
        "$mash_path" dist "${sample_names[$i]}.msh" "${sample_names[$j]}.msh" 
         ```
-       
 ### 4. Assembly-based analysis 
+Step 4.1 Assembly using SPAdes
+```
+python3 "$SPADES_PATH" --meta -1 "$f" -2 "$r" -o "$OUT_DIR/$output_name.assembled"
+```
+Step 4.2 Classification using Virsorter2
+```
+virsorter run --prep-for-dramv -w "$output_subdir" -i "$input_file" --include-groups "dsDNAphage,lavidaviridae,NCLDV,RNA,ssDNA" -j 128 all
+```
+Step 4.3 Blastn for assemblies
+```
+"$blastn_path" -query "$input_file" -db "$db_path" -out "$output_file" -outfmt 6 \
+  -evalue 1e-8 -perc_identity 80 -max_hsps 1 -qcov_hsp_perc 90
+```
+Step 4.4 Select best hits based on bitscore 
+```
+# Read the BLASTN output file as a DataFrame
+blastn_data = pd.read_csv(blastn_file, sep='\t', header=None)
+
+# Extract the coverage value from the first column
+blastn_data['Coverage'] = blastn_data[0].str.extract(r'cov_([\d.]+)').astype(float)
+
+# Apply the QC criteria to select the good quality reads
+selected_reads = blastn_data[(blastn_data[2] > min_identity) &
+                             (blastn_data[3] > min_alignment_length) &
+                             (blastn_data[10] < max_evalue) &
+                             (blastn_data['Coverage'] > min_coverage)]
+```
+
 #### Full-assembly followed by classification 
 #### Sub-assembly using classified virus reads 
 
