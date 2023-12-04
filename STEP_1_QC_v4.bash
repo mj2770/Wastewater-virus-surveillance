@@ -6,10 +6,9 @@
 #SBATCH --job-name preview_seq
 #SBATCH --mail-user mj2770@berkeley.edu
 #SBATCH --mail-type=ALL
-#SBATCH -A careswwm
 
 # Lines starting with #SBATCH are for SLURM job management systems
-# and may be removed if it is not submitting to SLURM
+# and may be removed if it is not submitted to SLURM
 
 ####################################################################
 #
@@ -18,7 +17,7 @@
 #
 ####################################################################
 #
-# This script the first STEP of QC trim within the overall proposed 
+# This script is the first STEP of QC trim within the overall proposed 
 # bioinformatics analysis pipeline:
 #
 #   1. QC trim of the raw data
@@ -30,9 +29,6 @@
 #
 ####################################################################
 
-
-
-####################################################################
 start=$SECONDS
 
 # source bashrc file or set the PATH to make any functions or variables defined
@@ -56,7 +52,6 @@ if [ ! -f "$INPUT_DIR/checkpoints" ]
 else
     printf "\tThe file 'checkpoints' already exists in the input directory.\n"
 fi
-
 #####################################################################
 
 #STEP 1.1: QC TRIM BBDUK (sliding windows)
@@ -77,7 +72,7 @@ for f in $INPUT_DIR/*R1*q.gz; do
 	# set up the output file names
     out_path=$(echo $f | awk -F "_R1" '{print $1 "_cleaned"}')
     
-	# bbduk (seperate bbduk and dedupe, could add the parallel job submission format later)
+	# bbduk (separate bbduk and dedupe, could add the parallel job submission format later)
         
 	bbduk.sh in1=$f in2=$f2 out1=$out_path".forward" out2=$out_path".reverse" \
     outm1=$out_path".forward.unpaired" outm2=$out_path".reverse.unpaired" \
@@ -87,7 +82,7 @@ done
 
     mv $INPUT_DIR/*"_cleaned.forward"* $OUT_DIR/STEP_1
     mv $INPUT_DIR/*"_cleaned.reverse"* $OUT_DIR/STEP_1
-	mv $INPUT_DIR/*"_cleaned.forward.unpaired"* $OUT_DIR/STEP_1
+    mv $INPUT_DIR/*"_cleaned.forward.unpaired"* $OUT_DIR/STEP_1
     mv $INPUT_DIR/*"_cleaned.reverse.unpaired"* $OUT_DIR/STEP_1
 
 printf "BBDUK\n" >> "$INPUT_DIR/checkpoints"
