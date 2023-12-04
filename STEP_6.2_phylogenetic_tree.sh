@@ -6,8 +6,6 @@
 #SBATCH --job-name preview_seq
 #SBATCH --mail-user mj2770@berkeley.edu
 #SBATCH --mail-type=ALL
-#SBATCH -A careswwm
-
 
 # Specify the full paths for MUSCLE and FastTree
 MUSCLE_PATH="/p/lustre1/preview/seq_software/muscle"
