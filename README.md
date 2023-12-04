@@ -3,10 +3,13 @@ This bioinformatic pipeline is used to analyze targeted sequencing data of virus
 
 Notes - This Repo is still under active development and please refer to the updated version. 
 
+
 ## Introduction
 This pipeline takes FASTQ files as input and includes both read-based and assembly-based virus classification. Before classification, quality control (QC) is performed, followed by deduplication to generate unique reads. The read-based analysis identifies viruses using Centrifuge and Recentrifuge, and the classified taxIDs were used for retrieving the virus-host information from NCBI taxonomy. The assembly-based classification involves full assembly by SPAdes, virus classification by Virsorter2, and subsequent Blastn against the NCBI nt virus database. The resulting near-complete virus genomes are utilized for phylogenetic analysis and variant calling.
 
 Dataset and code for the manuscript: Evaluation of the impact of concentration and extraction methods on the targeted sequencing of human viruses from wastewater
+
+![Bioinformatic pipeline_2-02](https://github.com/mj2770/Wastewater-virus-surveillance-/assets/45908853/417edc9a-5a8e-40d5-800b-2f976c8a1427)
 
 ## Download database and dependencies
 ### 1. Raw sequencing data 
@@ -22,15 +25,15 @@ All are deposited in the NCBI Sequence Read Archive (SRA) under accession number
    * [BBduk from the BBTools suite](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)
    * [Seqkit](https://github.com/shenwei356/seqkit/blob/master/README.md)
    * [Centrifuge and Recentrifuge](https://github.com/khyox/recentrifuge/wiki/Running-recentrifuge-for-Centrifuge) 
-   * [MASH](https://github.com/marbl/Mash): Fast genome and metagenome distance estimation using MinHash 
-   * Jupyter notebook: pandas, numpy, plotnine, seaborn, scipy.spatial etc. (All python scripts were uploaded as google colab scripts)
+   * [MASH](https://github.com/marbl/Mash): Fast genome and metagenome distance estimation using MinHash   
    * [bowtie2 (v2.5.1)](https://github.com/BenLangmead/bowtie2), [Samtools, bcftools, and htslib](https://www.htslib.org/download/) 
    * [VirSorter2 (v2.2.4)](https://github.com/jiarong/VirSorter2#detailed-description-on-output-files) 
-   * BLASTn (v2.14.0+)
+   * [BLASTn (v2.14.0+)](https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/)
    * [MUSCLE](https://github.com/rcedgar/muscle) and [Gblock 0.91b](http://phylogeny.lirmm.fr/phylo_cgi/one_task.cgi?task_type=gblocks)
    * [Instrain](https://github.com/MrOlm/inStrain/blob/master/docs/user_manual.rst)
    * [Dataset](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/) and [Dataformat](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/)
-
+   * Jupyter notebook: pandas, numpy, plotnine, seaborn, scipy.spatial etc. (All python scripts were uploaded as [google colab scripts](https://colab.google/))
+     
 ## Basic analysis pipeline
 ### STEP 1. Quality control 
 Step 1.1 Quality filter of raw reads
