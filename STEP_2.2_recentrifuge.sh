@@ -6,8 +6,6 @@
 #SBATCH --job-name rcf_50
 #SBATCH --mail-user mulakken1@llnl.gov
 #SBATCH --mail-type=ALL
-#SBATCH -A careswwm
-
 
 ## Winter 2023 decon
 taxonomy_dir=/p/lustre2/metagen/dbs/nt_wntr23/bld/taxonomy
