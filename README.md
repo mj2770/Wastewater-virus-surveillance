@@ -124,8 +124,8 @@ Step 4.7 Qurey the database using NCBI dataset and dataformat
 ```
 "$DATASETS_PATH" summary virus genome accession --inputfile "$input" --as-json-lines | "$DATAFORMAT_PATH" tsv virus-genome --fields accession,virus-name,virus-tax-id,host-name,host-tax-id,completeness,length > best_hits.tsv
 ```
-### 6. Subtyping and variants calling 
-STEP 6.1 Calculate the variants allel frequency using inStrain
+### 5. Subtyping and variants calling 
+STEP 5.1 Calculate the variants allel frequency using inStrain
 ```
 # Extract the sample name from the input BAM filename
 sample_name=$(basename "${input_bam%.*}" | sed 's/sorted_aligned_//')
@@ -137,7 +137,7 @@ output_vcf="${sample_name}_variant_call_trial.pass.vcf"
 $SAMTOOLS_PATH mpileup -A -B -Q 0 -f "$reference" "$input_bam" | \
 $IVAR_PATH variants -p "$sample_name"_variant_call -q 10 -t 0.01 -m 10 -r "$reference"
 ```
-Step 6.2 Phylogenetic analysis
+Step 5.2 Phylogenetic analysis
 ```
 # Perform Multiple Sequence Alignment (MSA) with MUSCLE
 #$MUSCLE_PATH -in final.fas -out final_MUSCLE.fasta
