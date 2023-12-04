@@ -61,10 +61,10 @@ $rcf_insall_path/rcf -n $taxonomy_dir -f $f1 -e TSV -o "$(basename $f1 _mhl22.ou
 
 ### 3. Analysis of the read-based classification results
     * Taxonomy domain analysis 
-   * Virus reads host-screen 
-* Virus reads genotype analysis (DNA and RNA type)
-     * Virus species richness and composition analysis 
-     * Virus genome similarity PCoA analysis (MASH distance)
+    * Virus reads host-screen 
+    * Virus reads genotype analysis (DNA and RNA type)
+    * Virus species richness and composition analysis 
+    * Virus genome similarity PCoA analysis (MASH distance)
        ```
        # re-extract all virus sequences
        rextract -f "$classification_output" -i "$sample_id" -1 "$fastq1" -2 "$fastq2"
@@ -111,7 +111,7 @@ sorted_data = blastn_data.sort_values(by=11, ascending=False)
 # Drop duplicates based on the unique Node (column 0) while keeping only the first occurrence
 selected_reads = sorted_data.drop_duplicates(subset=0, keep='first')
 ```
-Step 4.6 Collect the best-hits accession number 
+Step 4.6 Collect the best-hits accession numbers 
 ```
 # Save the selected hits to a file
 output_file = os.path.join(output_directory, f"{base_name}_best_hits.blastn")
@@ -121,5 +121,15 @@ Step 4.7 Qurey the database using NCBI dataset and dataformat
 ```
 "$DATASETS_PATH" summary virus genome accession --inputfile "$input" --as-json-lines | "$DATAFORMAT_PATH" tsv virus-genome --fields accession,virus-name,virus-tax-id,host-name,host-tax-id,completeness,length > best_hits.tsv
 ```
-
 ### 6. Subtyping and variants calling 
+```
+# Extract the sample name from the input BAM filename
+sample_name=$(basename "${input_bam%.*}" | sed 's/sorted_aligned_//')
+
+# Define output VCF filename
+output_vcf="${sample_name}_variant_call_trial.pass.vcf"
+
+# Run samtools mpileup and pipe the output to ivar variants
+$SAMTOOLS_PATH mpileup -A -B -Q 0 -f "$reference" "$input_bam" | \
+$IVAR_PATH variants -p "$sample_name"_variant_call -q 10 -t 0.01 -m 10 -r "$reference"
+```
