@@ -51,19 +51,21 @@ Step 1.4 Statistical analysis of all reads
 ```
  seqkit stats -j 100 "$file" -a > "temp_stats.txt
 ```
+### 2. Read-based classification by Centrifuge and Recentrifuge 
+```
+# Centrifuge
+time $cf_path/centrifuge -x  /p/lustre2/metagen/dbs/nt_wntr23/bld/nt_wntr23 --sample-sheet $config -p 256 -t --min-hitlen 15 -k 1
+# Recentrifuge
+$rcf_insall_path/rcf -n $taxonomy_dir -f $f1 -e TSV -o "$(basename $f1 _mhl22.out)_mhl40.out" -y 40
+```
 
-
-### 2. Statistics summary of the unique reads
-
-### 3. Read-based classification by Centrifuge and Recentrifuge 
-
-### 4. Analysis of the read-based classification results
+### 3. Analysis of the read-based classification results
     * Taxonomy domain analysis 
    * Virus reads host-screen 
 * Virus reads genotype analysis (DNA and RNA type)
      * Virus species richness and composition analysis 
      * Virus genome similarity PCoA analysis (MASH distance) 
-### 5. Assembly-based analysis 
+### 4. Assembly-based analysis 
 #### Full-assembly followed by classification 
 #### Sub-assembly using classified virus reads 
 
