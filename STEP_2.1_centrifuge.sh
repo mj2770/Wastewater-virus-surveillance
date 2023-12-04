@@ -6,7 +6,6 @@
 #SBATCH --job-name cf 
 #SBATCH --mail-user mulakken1@llnl.gov
 #SBATCH --mail-type=ALL
-#SBATCH -A careswwm
 
 config=/p/lustre1/preview/seq_data/output/STEP_2/cfg_samples.tsv
 cf_path=/usr/workspace/invisorg/Task1/cfg/bin
