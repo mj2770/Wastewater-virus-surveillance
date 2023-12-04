@@ -64,7 +64,18 @@ $rcf_insall_path/rcf -n $taxonomy_dir -f $f1 -e TSV -o "$(basename $f1 _mhl22.ou
    * Virus reads host-screen 
 * Virus reads genotype analysis (DNA and RNA type)
      * Virus species richness and composition analysis 
-     * Virus genome similarity PCoA analysis (MASH distance) 
+     * Virus genome similarity PCoA analysis (MASH distance)
+       ```
+       # re-extract all virus sequences
+       rextract -f "$classification_output" -i "$sample_id" -1 "$fastq1" -2 "$fastq2"
+       #Concatenate forward and reverse files
+       cat "$forward_file" "$reverse_file" > "$output_dir/${sample_name}.concatenated.fastq"
+       #Use Mash to sketch concatenated file
+       "$mash_path" sketch "$output_dir/${sample_name}.concatenated.fastq" -o "$output_dir/${sample_name}.msh"
+       #Calculate MASH pairwise distances
+       "$mash_path" dist "${sample_names[$i]}.msh" "${sample_names[$j]}.msh" 
+        ```
+       
 ### 4. Assembly-based analysis 
 #### Full-assembly followed by classification 
 #### Sub-assembly using classified virus reads 
